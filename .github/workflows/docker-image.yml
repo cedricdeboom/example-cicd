@@ -10,5 +10,21 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
+
+    - name: Login to Github Packages
+      run: docker login https://docker.pkg.github.com --user ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-example-fastapi-endpoint:$(date +%s)
+      run: docker build . -t docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$(date +%s)
+
+    - name: Push the image to Github Packages
+      run: docker push docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$(date +%s)
+
+    # - name: Push to GitHub Packages
+    #   uses: docker/build-push-action@v1
+    #   with:
+    #     username: ${{ github.actor }}
+    #     password: ${{ secrets.GITHUB_TOKEN }}
+    #     registry: docker.pkg.github.com
+    #     repository: dernat71/example-cicd/my-example-fastapi-endpoint
+    #     tag_with_ref: true

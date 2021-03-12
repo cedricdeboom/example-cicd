@@ -6,8 +6,8 @@ COPY requirements.txt .
 RUN python -m pip install -r requirements.txt
 
 # Copy the source files into the container
-WORKDIR /app
-COPY . /app
+WORKDIR /repo
+COPY . /repo
 
 # Define the command to be run when the container is started
-CMD ["python", "app\main.py"]
+CMD python /repo/app/main.py
