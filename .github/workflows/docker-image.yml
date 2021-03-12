@@ -12,6 +12,27 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install CI dependencies
+      run: |
+        python -m pip install -r .ci/requirements.txt
+        python -m pip install -r requirements.txt
+
+    - name: Lint with flake8
+      run: |
+        flake8 app/
+  
+    - name: Test with pytest
+      run: |
+        pytest
+
+    - name: Login to Github Packages
+      run: docker login https://docker.pkg.github.com --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
+
     - name: Login to Github Packages
       run: docker login https://docker.pkg.github.com --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
 
@@ -20,12 +41,3 @@ jobs:
         date_tag=$(date +%s)
         docker build . -t docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$date_tag
         docker push docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$date_tag
-
-    # - name: Push to GitHub Packages
-    #   uses: docker/build-push-action@v1
-    #   with:
-    #     username: ${{ github.actor }}
-    #     password: ${{ secrets.GITHUB_TOKEN }}
-    #     registry: docker.pkg.github.com
-    #     repository: dernat71/example-cicd/my-example-fastapi-endpoint
-    #     tag_with_ref: true
