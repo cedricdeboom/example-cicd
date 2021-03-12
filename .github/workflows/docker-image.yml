@@ -7,6 +7,7 @@ on:
 jobs:
 
   build:
+    name: Continuous Integration of the endpoint
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -14,13 +15,11 @@ jobs:
     - name: Login to Github Packages
       run: docker login https://docker.pkg.github.com --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Build the Docker image
+    - name: Build and push the Docker image
       run: |
         date_tag=$(date +%s)
         docker build . -t docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$date_tag
-
-    - name: Push the image to Github Packages
-      run: docker push docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$date_tag
+        docker push docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$date_tag
 
     # - name: Push to GitHub Packages
     #   uses: docker/build-push-action@v1
