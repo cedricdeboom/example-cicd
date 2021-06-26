@@ -12,7 +12,7 @@ def read_root():
 
 @app.get("/get_prediction")
 def get_prediction(feature_a: float, feature_b: float):
-    return {"prediction": gauss(mu=feature_a, sigma=feature_b)}
+    return {"predictions":[gauss(mu=feature_a, sigma=feature_b), gauss(mu=feature_a, sigma=feature_b) ]}
 
 
 if __name__ == '__main__':
