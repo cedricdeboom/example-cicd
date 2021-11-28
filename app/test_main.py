@@ -8,7 +8,7 @@ client = TestClient(app)
 def test_read_main():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"Hello": "World"}
+    assert response.json() == {"Goodbye": "People"}
 
 
 def test_get_prediction():
@@ -16,4 +16,4 @@ def test_get_prediction():
     assert response.status_code == 200
 
     output_payload_keys = list(response.json().keys())
-    assert "prediction" in output_payload_keys
+    assert "predictions" in output_payload_keys
