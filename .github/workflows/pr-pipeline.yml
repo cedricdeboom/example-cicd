@@ -1,8 +1,10 @@
-name: Docker Image CI
+name: Pull Request CI Pipeline
 
-on:
+on:  
   push:
-    branches: main
+  pull_request:
+    branches:
+      - master
 
 jobs:
 
@@ -19,12 +21,8 @@ jobs:
 
     - name: Test the Docker image
       run: |
+        git_hash=$(git rev-parse --short HEAD)
         docker run \
         --entrypoint=/bin/bash \
         docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$git_hash \
         ./script/test
-
-    - name: Login and push the Docker image to Github Packages
-      run: |
-        docker login https://docker.pkg.github.com --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
-        docker push docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$date_tag
