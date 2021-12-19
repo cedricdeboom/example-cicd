@@ -9,4 +9,5 @@ COPY . /repo
 RUN python -m pip install -r requirements.txt
 
 # Define the command to be run when the container is started
-CMD python app/main.py
+ENTRYPOINT ["python"]
+CMD ["app/main.py"]
