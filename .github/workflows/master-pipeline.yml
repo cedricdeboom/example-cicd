@@ -49,4 +49,4 @@ jobs:
     - name: Login and push the Docker image to ECR
       run: |
         git_hash=$(git rev-parse --short HEAD)
-        docker push 516454187396.dkr.ecr.eu-west-3.amazonaws.com/cedric/my-example-fastapi-endpoint:$git_hash
+        docker push ghcr.io/${{ github.actor }}/example-cicd/my-example-fastapi-endpoint:$git_hash
