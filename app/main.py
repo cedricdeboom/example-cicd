@@ -8,7 +8,7 @@ app = FastAPI()
 
 @app.get("/")
 def read_root():
-    return {"Goodbye": "People"}
+    return {"Hello": "People"}
 
 
 @app.get("/get_prediction")
