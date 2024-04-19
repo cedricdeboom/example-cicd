@@ -15,18 +15,23 @@ jobs:
     - name: Build the Docker image
       run: |
         git_hash=$(git rev-parse --short HEAD)
-        docker build . -t docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$git_hash
+        docker build . -t ghcr.io/cedricdeboom/example-cicd/my-example-fastapi-endpoint:$git_hash
+      env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Test the Docker image
       run: |
         git_hash=$(git rev-parse --short HEAD)
         docker run \
         --entrypoint=/bin/bash \
-        docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$git_hash \
+        docker build . -t ghcr.io/cedricdeboom/example-cicd/my-example-fastapi-endpoint:$git_hash \
         ./script/test
+      env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Login and push the Docker image to Github Packages
       run: |
         git_hash=$(git rev-parse --short HEAD)
-        docker login https://docker.pkg.github.com --username ${{ github.actor }} --password ${{ secrets.GITHUB_TOKEN }}
         docker push docker.pkg.github.com/dernat71/example-cicd/my-example-fastapi-endpoint:$git_hash
+      env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
