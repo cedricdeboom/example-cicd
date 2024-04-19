@@ -8,7 +8,7 @@ client = TestClient(app)
 def test_read_main():
     response = client.get("/")
     assert response.status_code == 200
-    assert response.json() == {"Goodbye": "People"}
+    assert response.json() == {"Hello": "People"}
 
 
 def test_get_prediction():
