@@ -12,8 +12,8 @@ def read_root():
 
 
 @app.get("/hello")
-def hello(name: str):
-    return {"Hello": f"{name}"}
+def hello():
+    return {"Kitty"}
 
 
 @app.get("/get_prediction")

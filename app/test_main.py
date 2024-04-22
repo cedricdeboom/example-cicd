@@ -20,6 +20,6 @@ def test_get_prediction():
 
 
 def test_hello():
-    response = client.get("/hello?name=cedric")
+    response = client.get("/hello")
     assert response.status_code == 200
-    assert response.json() == {"Hello": "cedric"}
+    assert response.json() == ["Kitty"]
