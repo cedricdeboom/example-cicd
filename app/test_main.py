@@ -17,9 +17,3 @@ def test_get_prediction():
 
     output_payload_keys = list(response.json().keys())
     assert "predictions" in output_payload_keys
-
-
-def test_hello():
-    response = client.get("/hello")
-    assert response.status_code == 200
-    assert response.json() == ["Kitty"]

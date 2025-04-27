@@ -11,11 +11,6 @@ def read_root():
     return {"Hello": "People"}
 
 
-@app.get("/hello")
-def hello():
-    return {"Kitty"}
-
-
 @app.get("/get_prediction")
 def get_prediction(feature_a: float, feature_b: float):
     return {"predictions": [gauss(mu=feature_a, sigma=feature_b),
